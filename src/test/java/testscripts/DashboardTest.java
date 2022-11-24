@@ -9,7 +9,6 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import base.PredefinedActions;
 import pages.DashboardPage;
 
 public class DashboardTest extends TestBase{

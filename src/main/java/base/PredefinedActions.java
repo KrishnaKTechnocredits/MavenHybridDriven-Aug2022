@@ -14,6 +14,8 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -32,11 +34,34 @@ public class PredefinedActions {
 	}
 
 	public static void start(String url) {
-		System.setProperty(ConstantValue.CHROMEDRIVERKEY, ConstantValue.CHROMEDRIVER);
-		driver = new ChromeDriver();
+
+		String browser = System.getProperty("browserName");
+		String env = System.getProperty("env");
+
+		System.out.println("Browser Name : " + browser);
+		System.out.println("Environment Name : " + env);
+
+		switch (browser.toLowerCase()) {
+		case "chrome":
+			System.setProperty(ConstantValue.CHROMEDRIVERKEY, ConstantValue.CHROMEDRIVER);
+			driver = new ChromeDriver();
+			break;
+
+		case "firefox":
+			System.setProperty(ConstantValue.CHROMEDRIVERKEY, ConstantValue.CHROMEDRIVER);
+			driver = new FirefoxDriver();
+
+		case "ie":
+			System.setProperty(ConstantValue.CHROMEDRIVERKEY, ConstantValue.CHROMEDRIVER);
+			driver = new InternetExplorerDriver();
+
+		default:
+			break;
+		}
+
 		driver.manage().window().maximize();
 		driver.get(url);
-		//driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		// driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		wait = new WebDriverWait(driver, ConstantValue.EXPLICTWAITTIME);
 		actions = new Actions(driver);
 	}
@@ -181,13 +206,14 @@ public class PredefinedActions {
 		}
 		return value;
 	}
-	
+
 	public static void takeScreenShot(String screenShotName) throws IOException {
-		TakesScreenshot screenshot = (TakesScreenshot)driver;
+		TakesScreenshot screenshot = (TakesScreenshot) driver;
 		File srcFile = screenshot.getScreenshotAs(OutputType.FILE);
-		FileUtils.copyFile(srcFile, new File(ConstantValue.SCREENSHOTLOCATION+screenShotName+ConstantValue.SCREENSHOTEXT));
+		FileUtils.copyFile(srcFile,
+				new File(ConstantValue.SCREENSHOTLOCATION + screenShotName + ConstantValue.SCREENSHOTEXT));
 	}
-		
+
 	public String getPageTitle() {
 		return driver.getTitle();
 	}

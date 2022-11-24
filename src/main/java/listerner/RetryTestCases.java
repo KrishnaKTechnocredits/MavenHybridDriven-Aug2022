@@ -8,6 +8,7 @@ import org.testng.ITestResult;
 import org.testng.annotations.ITestAnnotation;
 import org.testng.internal.annotations.IAnnotationTransformer;
 
+
 public class RetryTestCases implements IRetryAnalyzer, IAnnotationTransformer {
 
 	static int retryCount = 0;

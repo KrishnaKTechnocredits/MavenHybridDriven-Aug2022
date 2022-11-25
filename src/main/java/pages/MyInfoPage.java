@@ -33,7 +33,6 @@ public class MyInfoPage extends PredefinedActions{
 		}
 	}
 	
-	
 	public void gotoMenu(MyInfoMenu myInfoMenu) {
 		String menuText = myInfoMenu.value;
 		String locatorValue = String.format(menuPagemenu, menuText);

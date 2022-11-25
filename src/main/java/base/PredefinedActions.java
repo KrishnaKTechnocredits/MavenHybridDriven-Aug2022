@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
@@ -14,16 +15,20 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+
 import constant.ConstantValue;
 import customexceptions.ElementNotEnabledException;
 
 public class PredefinedActions {
+
+	static Logger log = Logger.getLogger(PredefinedActions.class);
 
 	protected static WebDriver driver;
 	static WebDriverWait wait;
@@ -35,7 +40,7 @@ public class PredefinedActions {
 
 	public static void start(String url) {
 
-		String browser = System.getProperty("browserName");
+		String browser = "chrome";
 		String env = System.getProperty("env");
 
 		System.out.println("Browser Name : " + browser);
@@ -43,6 +48,9 @@ public class PredefinedActions {
 
 		switch (browser.toLowerCase()) {
 		case "chrome":
+			ChromeOptions options = new ChromeOptions();
+			options.addArguments("--disable-notifications");
+			options.addArguments("--incognito");
 			System.setProperty(ConstantValue.CHROMEDRIVERKEY, ConstantValue.CHROMEDRIVER);
 			driver = new ChromeDriver();
 			break;
@@ -64,6 +72,7 @@ public class PredefinedActions {
 		// driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		wait = new WebDriverWait(driver, ConstantValue.EXPLICTWAITTIME);
 		actions = new Actions(driver);
+		log.trace("Browser launched");
 	}
 
 	public static WebDriver startTemp(String url) {
@@ -137,6 +146,7 @@ public class PredefinedActions {
 				element = driver.findElement(By.tagName(locatorValue));
 			break;
 		}
+		log.trace("Getting Element : " + locatorValue);
 		return element;
 	}
 
@@ -158,7 +168,7 @@ public class PredefinedActions {
 	}
 
 	protected void setText(String locatorType, String locatorValue, boolean isWaitRequired, String text) {
-
+		log.trace("Enterd text as : " + text + " on " + locatorValue);
 		WebElement e = getElement(locatorType, locatorValue, isWaitRequired);
 		if (e.isEnabled())
 			e.sendKeys(text);
@@ -178,6 +188,7 @@ public class PredefinedActions {
 			JavascriptExecutor je = (JavascriptExecutor) driver;
 			je.executeScript("arguments[0].scrollIntoView(true)", e);
 		}
+		log.trace("Scroll till element");
 	}
 
 	protected boolean isElementDisplayed(WebElement e) {

@@ -5,9 +5,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
+import org.joda.time.DateTime;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
@@ -20,8 +22,9 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 
 import constant.ConstantValue;
 import customexceptions.ElementNotEnabledException;
@@ -40,8 +43,8 @@ public class PredefinedActions {
 
 	public static void start(String url) {
 
-		String browser = "chrome";
-		String env = System.getProperty("env");
+		String browser = System.getProperty("browserName");
+		String env = System.getProperty("e");
 
 		System.out.println("Browser Name : " + browser);
 		System.out.println("Environment Name : " + env);
@@ -260,6 +263,31 @@ public class PredefinedActions {
 	protected void markCheckbox(WebElement ele, boolean checkedOrUnchecked) {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("arguments[0].checked=" + checkedOrUnchecked + "", ele);
+	}
+
+	public void waitForPageLoad() {
+		DateTime dateTime = DateTime.now().plusSeconds(ConstantValue.PAGE_LOAD_TIME);
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		while (dateTime.isAfterNow()
+				&& !js.executeScript("return document.readyState").toString().equalsIgnoreCase("complete")) {
+			System.out.println("Wait for page load");
+		}
+	}
+
+	public void fluentWait() {
+		Wait wait = new FluentWait(driver)
+				.withTimeout(12, TimeUnit.SECONDS)
+				.pollingEvery(1, TimeUnit.SECONDS)
+				.ignoring(Exception.class);
+//				.until(ExpectedConditions.);
+
+		WebElement foo = (WebElement) wait.until(new Function<WebDriver, WebElement>() {
+			@Override
+			public WebElement apply(WebDriver t) {
+				waitForPageLoad();
+				return driver.findElement(By.id("foo"));
+			}
+		});
 	}
 
 }

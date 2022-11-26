@@ -2,12 +2,9 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="Suite">
 
-	<parameter name="env" value="PROD"></parameter>
-	<parameter name="os" value="win"></parameter>
-
 	<test thread-count="5" name="Test">
 		<classes>
-			<class name="testscripts.dependantscritps.ParameterTest2"></class>
+			<class name="testscripts.MyInfoSalaryTest"></class>
 		</classes>
 	</test> <!-- Test -->
 </suite> <!-- Suite -->

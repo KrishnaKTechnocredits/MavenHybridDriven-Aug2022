@@ -10,7 +10,6 @@ import org.testng.annotations.BeforeSuite;
 
 import base.PredefinedActions;
 import constant.ConstantValue;
-import pages.LoginPage;
 import utility.PropertyFileOperations;
 
 public class TestBase {
@@ -26,8 +25,8 @@ public class TestBase {
 		String url = fileOperations.getValue("url");
 		PredefinedActions.start(url);
 
-		LoginPage loginPage = LoginPage.getObject();
-		loginPage.login(fileOperations.getValue("username"), fileOperations.getValue("password"));
+//		LoginPage loginPage = LoginPage.getObject();
+//		loginPage.login(fileOperations.getValue("username"), fileOperations.getValue("password"));
 	}
 
 	@AfterMethod

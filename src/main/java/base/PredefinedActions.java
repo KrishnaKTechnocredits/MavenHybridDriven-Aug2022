@@ -46,6 +46,12 @@ public class PredefinedActions {
 		String browser = System.getProperty("browserName");
 		String env = System.getProperty("e");
 
+		if (browser == null)
+			browser = "chrome";
+
+		if (env == null)
+			env = "Qa";
+
 		System.out.println("Browser Name : " + browser);
 		System.out.println("Environment Name : " + env);
 
@@ -275,9 +281,7 @@ public class PredefinedActions {
 	}
 
 	public void fluentWait() {
-		Wait wait = new FluentWait(driver)
-				.withTimeout(12, TimeUnit.SECONDS)
-				.pollingEvery(1, TimeUnit.SECONDS)
+		Wait wait = new FluentWait(driver).withTimeout(12, TimeUnit.SECONDS).pollingEvery(1, TimeUnit.SECONDS)
 				.ignoring(Exception.class);
 //				.until(ExpectedConditions.);
 

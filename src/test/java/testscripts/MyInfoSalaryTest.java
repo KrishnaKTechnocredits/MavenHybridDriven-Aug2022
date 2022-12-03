@@ -15,10 +15,13 @@ public class MyInfoSalaryTest extends TestBase{
 	public void verifyCtc() {
 		DashboardPage dashboardPage = DashboardPage.getObject();
 		dashboardPage.gotoMenu(Menu.MYINFO);
+		
 		MyInfoPage myInfoPage = MyInfoPage.getObject();
 		myInfoPage.gotoMenu(MyInfoMenu.SALARY);
+		
 		MyInfo_SalaryPage salaryPage = MyInfo_SalaryPage.getObject();
 		String ctc = salaryPage.getCostToCompany();
+		
 		Assert.assertTrue(ctc.startsWith("$"), "Actual ctc displayed as : " + ctc);
 		ctc = ctc.replace("$", "").replace(",", "");
 		System.out.println(ctc);

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2022-12-03T12:10:30 IST" name="Default suite" finished-at="2022-12-03T12:10:37 IST" duration-ms="7199">
+    <groups>
+    </groups>
+    <test started-at="2022-12-03T12:10:30 IST" name="Default test" finished-at="2022-12-03T12:10:37 IST" duration-ms="7199">
+      <class name="testscripts.DataBaseAndUICompareTest">
+        <test-method is-config="true" signature="intiLog4j()[pri:0, instance:testscripts.DataBaseAndUICompareTest@78123e82]" started-at="2022-12-03T12:10:30 IST" name="intiLog4j" finished-at="2022-12-03T12:10:30 IST" duration-ms="159" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- intiLog4j -->
+        <test-method is-config="true" signature="setUp()[pri:0, instance:testscripts.DataBaseAndUICompareTest@78123e82]" started-at="2022-12-03T12:10:30 IST" name="setUp" finished-at="2022-12-03T12:10:35 IST" duration-ms="4771" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method signature="compareUIandDBDatab()[pri:0, instance:testscripts.DataBaseAndUICompareTest@78123e82]" started-at="2022-12-03T12:10:35 IST" name="compareUIandDBDatab" finished-at="2022-12-03T12:10:37 IST" duration-ms="1768" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- compareUIandDBDatab -->
+        <test-method is-config="true" signature="tearDown(org.testng.ITestResult)[pri:0, instance:testscripts.DataBaseAndUICompareTest@78123e82]" started-at="2022-12-03T12:10:37 IST" name="tearDown" finished-at="2022-12-03T12:10:37 IST" duration-ms="584" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=compareUIandDBDatab status=SUCCESS method=DataBaseAndUICompareTest.compareUIandDBDatab()[pri:0, instance:testscripts.DataBaseAndUICompareTest@78123e82] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- testscripts.DataBaseAndUICompareTest -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>

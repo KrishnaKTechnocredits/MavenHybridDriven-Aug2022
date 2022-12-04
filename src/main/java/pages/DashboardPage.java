@@ -13,6 +13,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import base.PredefinedActions;
 import constant.ConstantValue;
+import reports.ExtentManager;
 import utility.PropertyFileOperations;
 
 public class DashboardPage extends PredefinedActions {
@@ -151,5 +152,6 @@ public class DashboardPage extends PredefinedActions {
 		String menuText = menuName.menuItem;
 		String locatorValue = String.format(prop.getValue("menuLocator"), menuText);
 		clickOnElement(getElement("xpath", locatorValue, true), false);
+		ExtentManager.log("Navigate to " + menuText);
 	}
 }

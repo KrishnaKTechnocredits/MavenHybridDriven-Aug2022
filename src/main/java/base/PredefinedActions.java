@@ -28,6 +28,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import constant.ConstantValue;
 import customexceptions.ElementNotEnabledException;
+import reports.ExtentManager;
 
 public class PredefinedActions {
 
@@ -41,7 +42,7 @@ public class PredefinedActions {
 
 	}
 
-	public static void start(String url) {
+	public static WebDriver start(String url) {
 
 		String browser = System.getProperty("browserName");
 		String env = System.getProperty("e");
@@ -81,11 +82,14 @@ public class PredefinedActions {
 		// driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		wait = new WebDriverWait(driver, ConstantValue.EXPLICTWAITTIME);
 		actions = new Actions(driver);
-		log.trace("Browser launched");
+//		log.trace("Browser launched");
+		ExtentManager.log(browser + " browser launch and load " + url);
+		return driver;
 	}
 
 	public static WebDriver startTemp(String url) {
-		System.setProperty("webdriver.chrome.driver", "drivers/chromedriver_106.exe");
+		System.setProperty(ConstantValue.CHROMEDRIVERKEY, ConstantValue.CHROMEDRIVER);
+//		System.setProperty("webdriver.chrome.driver", "drivers/chromedriver_106.exe");
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
 		driver.get(url);
@@ -155,13 +159,14 @@ public class PredefinedActions {
 				element = driver.findElement(By.tagName(locatorValue));
 			break;
 		}
-		log.trace("Getting Element : " + locatorValue);
+//		log.trace("Getting Element : " + locatorValue);
 		return element;
 	}
 
 	protected boolean waitForVisibilityOfElement(WebElement e) {
 		try {
 			wait.until(ExpectedConditions.visibilityOf(e));
+			ExtentManager.log("Waiting for element to be visible");
 		} catch (Exception exception) {
 			return false;
 		}
@@ -170,9 +175,10 @@ public class PredefinedActions {
 
 	protected void setText(WebElement e, String text) {
 		scrollToElement(e);
-		if (e.isEnabled())
+		if (e.isEnabled()) {
 			e.sendKeys(text);
-		else
+			ExtentManager.log("Entering text " + text + " on element");
+		} else
 			throw new ElementNotEnabledException(text + " can't be entered as ele,ent is not enabled");
 	}
 
@@ -196,6 +202,7 @@ public class PredefinedActions {
 		if (!e.isDisplayed()) {
 			JavascriptExecutor je = (JavascriptExecutor) driver;
 			je.executeScript("arguments[0].scrollIntoView(true)", e);
+			ExtentManager.log("Scroll till element");
 		}
 		log.trace("Scroll till element");
 	}
@@ -227,14 +234,15 @@ public class PredefinedActions {
 		return value;
 	}
 
-	public static void takeScreenShot(String screenShotName) throws IOException {
+	public static String takeScreenShot() throws IOException {
 		TakesScreenshot screenshot = (TakesScreenshot) driver;
-		File srcFile = screenshot.getScreenshotAs(OutputType.FILE);
-		FileUtils.copyFile(srcFile,
-				new File(ConstantValue.SCREENSHOTLOCATION + screenShotName + ConstantValue.SCREENSHOTEXT));
+		return screenshot.getScreenshotAs(OutputType.BASE64);
+//		FileUtils.copyFile(srcFile,
+//				new File(ConstantValue.SCREENSHOTLOCATION + screenShotName + ConstantValue.SCREENSHOTEXT));
 	}
 
 	public String getPageTitle() {
+		ExtentManager.log("page Title :" + driver.getTitle());
 		return driver.getTitle();
 	}
 
@@ -243,6 +251,7 @@ public class PredefinedActions {
 	}
 
 	public static void closeBrowser() {
+		ExtentManager.log("Closing browser");
 		driver.close();
 	}
 
